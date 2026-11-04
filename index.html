@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>交通アクセス | 富士急ハイランド（リニューアル案モック）</title>
+<style>
+  :root{
+    --red:#e4002b;
+    --red-dark:#b80022;
+    --navy:#1b2a4a;
+    --blue:#2b6cd9;
+    --sky:#eaf2ff;
+    --ink:#222;
+    --muted:#666;
+    --line:#e3e6ec;
+    --bg:#f5f6f8;
+    --card:#fff;
+    --radius:16px;
+    --shadow:0 2px 10px rgba(20,30,60,.08);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:120px}
+  body{margin:0;font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans JP","Yu Gothic",Meiryo,sans-serif;color:var(--ink);background:var(--bg);line-height:1.7;-webkit-font-smoothing:antialiased}
+  a{color:var(--blue)}
+  img{max-width:100%;display:block}
+  .container{max-width:1040px;margin:0 auto;padding:0 16px}
+
+  /* ===== header ===== */
+  .header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
+  .header .container{display:flex;align-items:center;justify-content:space-between;height:60px;gap:8px}
+  .logo{display:flex;align-items:center;gap:6px;font-weight:800;color:var(--navy);text-decoration:none;font-size:15px;letter-spacing:0;white-space:nowrap}
+  .logo .q{width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-size:16px;font-weight:900}
+  .header-actions{display:flex;align-items:center;gap:8px}
+  .btn-ticket{background:var(--red);color:#fff;text-decoration:none;font-weight:700;font-size:13px;padding:9px 12px;border-radius:999px;display:flex;align-items:center;gap:6px;white-space:nowrap}
+  .btn-menu{width:40px;height:40px;border:0;background:transparent;display:grid;place-items:center;gap:0;cursor:pointer}
+  .btn-menu span{display:block;width:22px;height:2px;background:var(--navy);margin:3px auto;border-radius:2px}
+
+  /* ===== breadcrumb ===== */
+  .crumb{font-size:12px;color:var(--muted);padding:10px 0}
+  .crumb a{color:var(--muted);text-decoration:none}
+  .crumb span{margin:0 6px}
+
+  /* ===== hero ===== */
+  .hero{background:#fff;padding:12px 0 20px;text-align:center}
+  .hero h1{margin:0;font-size:26px;color:var(--navy);display:flex;align-items:center;justify-content:center;gap:8px}
+  .hero h1 .pin{width:28px;height:28px}
+  .hero .en{font-size:11px;letter-spacing:.25em;color:var(--red);font-weight:700;margin-top:2px}
+  .hero p{margin:12px auto 0;max-width:36em;font-size:14px;color:#444}
+
+  /* ===== address card ===== */
+  .addr{margin:16px 0;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
+  .addr .name{font-weight:700;font-size:15px}
+  .addr .text{font-size:13px;color:var(--muted);margin-top:2px}
+  .addr .row{display:flex;gap:8px;margin-top:12px}
+  .btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 6px;border-radius:12px;font-weight:700;font-size:13px;text-decoration:none;border:2px solid transparent;min-height:46px;white-space:nowrap}
+  .btn-primary{background:var(--blue);color:#fff}
+  .btn-outline{background:#fff;color:var(--blue);border-color:var(--blue)}
+  .btn svg{width:18px;height:18px;flex:none}
+
+  /* ===== sticky mode nav ===== */
+  .modenav{position:sticky;top:60px;z-index:40;background:rgba(245,246,248,.95);backdrop-filter:blur(6px);padding:8px 0;border-bottom:1px solid var(--line)}
+  .modenav ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+  .modenav a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px;border-radius:12px;background:#fff;border:1px solid var(--line);text-decoration:none;color:var(--navy);font-size:11px;font-weight:700;line-height:1.2}
+  .modenav a svg{width:26px;height:26px}
+  .modenav a.is-active{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+  /* ===== section / accordion cards ===== */
+  .section{margin:20px 0}
+  details.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:12px}
+  details.card>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:16px;font-weight:800;font-size:17px;color:var(--navy);position:relative}
+  details.card>summary::-webkit-details-marker{display:none}
+  details.card>summary .ic{width:44px;height:44px;border-radius:12px;background:var(--sky);display:grid;place-items:center;flex:none}
+  details.card>summary .ic svg{width:26px;height:26px}
+  details.card>summary .sub{display:block;font-size:12px;color:var(--muted);font-weight:500;margin-top:2px}
+  details.card>summary .arrow{margin-left:auto;width:28px;height:28px;border-radius:50%;background:var(--blue);display:grid;place-items:center;flex:none;transition:transform .25s}
+  details.card>summary .arrow svg{width:14px;height:14px}
+  details.card[open]>summary .arrow{transform:rotate(180deg)}
+  details.card .body{padding:0 16px 20px;border-top:1px dashed var(--line);padding-top:16px}
+
+  h3.lbl{font-size:14px;margin:18px 0 8px;color:var(--navy);display:flex;align-items:center;gap:8px}
+  h3.lbl::before{content:"";width:4px;height:16px;background:var(--red);border-radius:2px}
+  h3.lbl:first-child{margin-top:0}
+
+  /* route steps */
+  .steps{list-style:none;margin:0;padding:0;position:relative}
+  .steps li{position:relative;padding:0 0 14px 30px;font-size:14px}
+  .steps li::before{content:"";position:absolute;left:8px;top:8px;width:10px;height:10px;border-radius:50%;background:var(--blue);border:3px solid #fff;box-shadow:0 0 0 2px var(--blue)}
+  .steps li:not(:last-child)::after{content:"";position:absolute;left:12px;top:20px;bottom:-4px;width:2px;background:var(--line)}
+  .steps li.goal::before{background:var(--red);box-shadow:0 0 0 2px var(--red)}
+  .steps .st{font-weight:700}
+  .steps .via{display:inline-block;font-size:12px;color:var(--muted);background:var(--bg);border-radius:6px;padding:1px 8px;margin-top:2px}
+
+  /* list of places */
+  .place{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
+  .place:last-child{border-bottom:0}
+  .place .t{flex:1}
+  .place .t b{display:block}
+  .place .t small{color:var(--muted);font-size:12px}
+  .place .map{flex:none;display:flex;align-items:center;gap:4px;font-size:12px;font-weight:700;color:var(--blue);text-decoration:none;border:1.5px solid var(--blue);border-radius:999px;padding:6px 10px;white-space:nowrap}
+  .place .map svg{width:14px;height:14px}
+
+  .tag{display:inline-block;font-size:11px;font-weight:700;color:#fff;background:var(--red);border-radius:4px;padding:1px 6px;margin-right:6px;vertical-align:middle}
+  .tag.gray{background:#8a94a6}
+
+  .note{background:#fff7e6;border-left:4px solid #f5a623;padding:10px 12px;font-size:13px;border-radius:0 8px 8px 0;margin:12px 0}
+  .note b{color:#9a5b00}
+
+  /* fee */
+  .fee{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+  .fee div{background:var(--bg);border-radius:12px;padding:12px;text-align:center}
+  .fee .v{font-size:20px;font-weight:800;color:var(--navy);line-height:1.2}
+  .fee .k{font-size:11px;color:var(--muted);margin-top:4px}
+  .pay{display:flex;flex-wrap:wrap;gap:6px;font-size:12px}
+  .pay span{background:var(--bg);border-radius:6px;padding:4px 8px}
+
+  /* set plans */
+  .plans{display:grid;gap:8px}
+  .plan{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#fff5f6,#fff);border:1.5px solid #ffd4dc;border-radius:12px;padding:12px;text-decoration:none;color:var(--ink)}
+  .plan .pct{flex:none;width:52px;height:52px;border-radius:12px;background:var(--red);color:#fff;display:grid;place-items:center;font-weight:900;font-size:11px;text-align:center;line-height:1.2}
+  .plan .t{flex:1;font-size:13px}
+  .plan .t b{display:block;font-size:14px;color:var(--navy)}
+  .plan .t small{color:var(--muted)}
+  .plan .ext{flex:none;font-size:11px;color:var(--muted)}
+
+  /* prefecture chips */
+  .chips{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  .chips a{display:flex;align-items:center;justify-content:space-between;background:var(--bg);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--navy);font-weight:700;font-size:14px}
+  .chips a::after{content:"›";font-size:20px;color:var(--blue)}
+
+  /* link button */
+  .linkbtn{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--navy);color:#fff;text-decoration:none;font-weight:700;padding:14px;border-radius:12px;font-size:14px;margin-top:12px}
+  .linkbtn.red{background:var(--red)}
+  .linkbtn svg{width:18px;height:18px}
+
+  /* map embed placeholder */
+  .mapbox{margin:12px 0;background:#dfe7f1;border-radius:12px;aspect-ratio:4/3;display:grid;place-items:center;color:#556;font-size:13px;text-align:center;position:relative;overflow:hidden}
+  .mapbox::before{content:"";position:absolute;inset:0;background:
+    linear-gradient(90deg,transparent 48%,rgba(255,255,255,.7) 49%,rgba(255,255,255,.7) 51%,transparent 52%),
+    linear-gradient(0deg,transparent 60%,rgba(255,255,255,.7) 61%,rgba(255,255,255,.7) 63%,transparent 64%),
+    repeating-linear-gradient(45deg,rgba(255,255,255,.25) 0 2px,transparent 2px 24px)}
+  .mapbox span{position:relative;background:rgba(255,255,255,.85);padding:6px 12px;border-radius:8px}
+
+  /* cautions */
+  .caution{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
+  .caution h2{margin:0 0 8px;font-size:17px;color:var(--navy);display:flex;align-items:center;gap:8px}
+  .caution h2 svg{width:22px;height:22px}
+  .caution ul{margin:0;padding-left:18px;font-size:13px;color:#444}
+  .caution li{margin:4px 0}
+
+  /* related */
+  .related{display:grid;gap:8px;margin:20px 0}
+  .related a{display:flex;align-items:center;justify-content:space-between;background:#fff;border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--navy);font-weight:700;box-shadow:var(--shadow)}
+  .related a::after{content:"›";font-size:22px;color:var(--blue)}
+
+  footer{background:var(--navy);color:#cfd6e4;font-size:12px;text-align:center;padding:24px 16px 100px;margin-top:24px}
+
+  /* fixed bottom bar (mobile) */
+  .bottombar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(255,255,255,.96);border-top:1px solid var(--line);padding:8px 12px calc(8px + env(safe-area-inset-bottom));display:flex;gap:8px}
+  .bottombar a{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:12px;border-radius:12px;text-decoration:none;font-weight:800;font-size:14px}
+  .bottombar .map{background:#fff;color:var(--blue);border:2px solid var(--blue)}
+  .bottombar .tk{background:var(--red);color:#fff}
+  .bottombar svg{width:18px;height:18px}
+  .totop{position:fixed;right:12px;bottom:82px;z-index:55;width:40px;height:40px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;box-shadow:var(--shadow)}
+
+  /* ===== desktop ===== */
+  @media (min-width:900px){
+    .hero h1{font-size:34px}
+    .hero p{font-size:16px}
+    .modenav ul{max-width:720px;margin:0 auto}
+    .modenav a{flex-direction:row;gap:8px;font-size:14px;padding:10px}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:16px 24px;align-items:start}
+    .chips{grid-template-columns:repeat(4,1fr)}
+    .fee{grid-template-columns:repeat(4,1fr)}
+    details.card>summary{font-size:20px;padding:20px 24px}
+    details.card .body{padding:20px 24px 28px}
+    .bottombar,.totop{display:none}
+    footer{padding-bottom:24px}
+    .related{grid-template-columns:repeat(3,1fr)}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<header class="header">
+  <div class="container">
+    <a class="logo" href="#"><span class="q">Q</span>富士急ハイランド</a>
+    <div class="header-actions">
+      <a class="btn-ticket" href="#">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9a2 2 0 0 0 2-2V5h14v2a2 2 0 0 0 0 4v2a2 2 0 0 0 0 4v2H5v-2a2 2 0 0 0-2-2z"/></svg>
+        チケット購入
+      </a>
+      <button class="btn-menu" aria-label="メニュー"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="container">
+  <nav class="crumb"><a href="#">TOP</a><span>›</span><a href="#">ご利用ガイド</a><span>›</span>交通アクセス</nav>
+</div>
+
+<!-- ===== Hero ===== -->
+<section class="hero">
+  <div class="container">
+    <h1>
+      <svg class="pin" viewBox="0 0 24 24" fill="none"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z" fill="#e4002b"/><circle cx="12" cy="10" r="2.8" fill="#fff"/></svg>
+      交通アクセス
+    </h1>
+    <div class="en">ACCESS</div>
+    <p>富士急ハイランドへは、お車・電車・バスなどさまざまな方法でお越しいただけます。ご来園方法をお選びください。</p>
+
+    <div class="addr" style="text-align:left">
+      <div class="name">富士急ハイランド</div>
+      <div class="text">〒403-0017 山梨県富士吉田市新西原5-6-1</div>
+      <div class="row">
+        <a class="btn btn-primary" href="https://maps.app.goo.gl/k1QEmaCw5jQvgtTi9" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="3"/></svg>
+          地図アプリで開く
+        </a>
+        <a class="btn btn-outline" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          営業時間を見る
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Sticky mode nav ===== -->
+<nav class="modenav" aria-label="交通手段を選ぶ">
+  <div class="container">
+    <ul>
+      <li><a href="#car" class="is-active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11"/><rect x="3" y="11" width="18" height="7" rx="2"/><circle cx="7.5" cy="18" r="1.8" fill="#fff"/><circle cx="16.5" cy="18" r="1.8" fill="#fff"/></svg>
+        車・バイク</a></li>
+      <li><a href="#train">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 10h14M8 20l-1.5 2M16 20l1.5 2M7 17l-1 3h12l-1-3"/><circle cx="8.5" cy="13.5" r="1" fill="currentColor"/><circle cx="15.5" cy="13.5" r="1" fill="currentColor"/></svg>
+        電車</a></li>
+      <li><a href="#bus">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="15" rx="3"/><path d="M4 11h16M7 18v2M17 18v2"/><circle cx="8" cy="15" r="1" fill="currentColor"/><circle cx="16" cy="15" r="1" fill="currentColor"/></svg>
+        バス</a></li>
+      <li><a href="#parking">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M9 17V7h3.5a3 3 0 0 1 0 6H9"/></svg>
+        駐車場料金</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+
+<!-- ===== 車・バイク ===== -->
+<section class="section" id="car">
+  <details class="card" open>
+    <summary>
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2b6cd9" stroke-width="1.8"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11"/><rect x="3" y="11" width="18" height="7" rx="2"/><circle cx="7.5" cy="18" r="1.8" fill="#fff"/><circle cx="16.5" cy="18" r="1.8" fill="#fff"/></svg></span>
+      <span>車・バイクでお越しの方<span class="sub">中央自動車道 河口湖ICから約10分</span></span>
+      <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg></span>
+    </summary>
+    <div class="body">
+      <div class="two">
+        <div>
+          <h3 class="lbl">主要ルート</h3>
+          <ul class="steps">
+            <li><span class="st">東京・新宿方面から</span><br><span class="via">中央自動車道 → 河口湖IC → 国道139号 約10分</span></li>
+            <li><span class="st">名古屋・静岡方面から</span><br><span class="via">東名高速 御殿場IC → 東富士五湖道路 富士吉田IC → 約10分</span></li>
+            <li class="goal"><span class="st">富士急ハイランド 駐車場</span><br><span class="via">※所要時間は目安です（要確認）</span></li>
+          </ul>
+          <div class="mapbox"><span>Googleマップ埋め込み（駐車場入口まで）</span></div>
+        </div>
+        <div>
+          <h3 class="lbl">駐車場のご案内</h3>
+          <div class="place">
+            <div class="t"><b>フジヤマ駐車場（第一・第三）</b><small>普通車・大型車・二輪車</small></div>
+            <a class="map" href="https://maps.app.goo.gl/2kETEwMKgXVMJ8Nm9" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/></svg>地図</a>
+          </div>
+          <div class="place">
+            <div class="t"><b>ええじゃないか駐車場（第二）</b><small>普通車・高さ2.1m以下の車のみ</small></div>
+            <a class="map" href="https://maps.app.goo.gl/FS5XvmAkgKm2bpzc8" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/></svg>地図</a>
+          </div>
+          <div class="place">
+            <div class="t"><b><span class="tag gray">バイク</span>駐輪場</b><small>フジヤマ駐車場（第一）内</small></div>
+            <a class="map" href="https://maps.app.goo.gl/R9jj3ikvfYVL3HwKA" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/></svg>地図</a>
+          </div>
+          <div class="note"><b>送迎（乗り降りのみ）の方へ</b><br>入園されない送迎の方は専用の乗降場所をご利用ください。<a href="https://www.fujiq.jp/news/pickup_car_2023.html">送迎案内はこちら ›</a></div>
+          <a class="linkbtn" href="#parking">駐車場料金を見る
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+
+      <h3 class="lbl">お得な車セットプラン</h3>
+      <div class="plans">
+        <a class="plan" href="https://www.fujiq.jp/event/highwayplan.html"><span class="pct">SET<br>PLAN</span><span class="t"><b>NEXCO高速道路＆ワンデイパス</b><small>高速道路の周遊パスとワンデイパスがセットに</small></span><span class="ext">外部 ↗</span></a>
+        <a class="plan" href="https://car.orix.co.jp/campaign/fuji_qLP.html"><span class="pct">SET<br>PLAN</span><span class="t"><b>オリックスレンタカー＆ワンデイパス</b><small>レンタカーで行くならこちら</small></span><span class="ext">外部 ↗</span></a>
+        <a class="plan" href="https://share.timescar.jp/ecoupon/fujiq/"><span class="pct">SET<br>PLAN</span><span class="t"><b>タイムズカーシェア＆ワンデイパス</b><small>カーシェア利用者限定クーポン</small></span><span class="ext">外部 ↗</span></a>
+      </div>
+    </div>
+  </details>
+</section>
+
+<!-- ===== 電車 ===== -->
+<section class="section" id="train">
+  <details class="card" open>
+    <summary>
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2b6cd9" stroke-width="1.8"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 10h14M8 20l-1.5 2M16 20l1.5 2M7 17l-1 3h12l-1-3"/><circle cx="8.5" cy="13.5" r="1" fill="#2b6cd9"/><circle cx="15.5" cy="13.5" r="1" fill="#2b6cd9"/></svg></span>
+      <span>電車でお越しの方<span class="sub">最寄駅：富士急行線「富士急ハイランド駅」直結</span></span>
+      <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg></span>
+    </summary>
+    <div class="body">
+      <div class="note" style="margin-top:0"><b>予約不要！渋滞なし！</b> 電車なら混雑日もスムーズにご来園いただけます。</div>
+      <div class="two">
+        <div>
+          <h3 class="lbl">新宿駅から</h3>
+          <ul class="steps">
+            <li><span class="st">新宿駅</span><br><span class="via">JR中央線 特急「富士回遊」で直通 約1時間50分</span></li>
+            <li><span class="st">大月駅</span><br><span class="via">特急以外は富士急行線に乗り換え 約50分</span></li>
+            <li class="goal"><span class="st">富士急ハイランド駅</span><br><span class="via">改札を出て徒歩すぐ（第二入園口）</span></li>
+          </ul>
+          <p style="font-size:12px;color:var(--muted);margin:0">※所要時間は目安です。最新の時刻は各鉄道会社のサイトでご確認ください。</p>
+        </div>
+        <div>
+          <h3 class="lbl">駅から入園口まで</h3>
+          <div class="mapbox"><span>Googleマップ埋め込み（富士急ハイランド駅 → 第二入園口）</span></div>
+          <a class="linkbtn" href="https://www.fujikyu-railway.jp/denshadefujiq/" target="_blank" rel="noopener">電車でのアクセスガイド（外部サイト）
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4h6v6M20 4l-9 9M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></a>
+        </div>
+      </div>
+
+      <h3 class="lbl">お得な電車セットプラン</h3>
+      <div class="plans">
+        <a class="plan" href="https://www.fujikyu-railway.jp/ticket/fujiq.php"><span class="pct">大月<br>発</span><span class="t"><b>富士急行線2日間往復＆ワンデイパス</b><small>沿線をゆっくり観光したい方におすすめ</small></span><span class="ext">外部 ↗</span></a>
+        <a class="plan" href="https://www.jre-travel.com/feature/fujiq/"><span class="pct">新宿<br>発</span><span class="t"><b>JR特急列車往復＆ワンデイパス</b><small>より早く快適に移動したい方におすすめ</small></span><span class="ext">外部 ↗</span></a>
+      </div>
+    </div>
+  </details>
+</section>
+
+<!-- ===== バス ===== -->
+<section class="section" id="bus">
+  <details class="card" open>
+    <summary>
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2b6cd9" stroke-width="1.8"><rect x="4" y="3" width="16" height="15" rx="3"/><path d="M4 11h16M7 18v2M17 18v2"/><circle cx="8" cy="15" r="1" fill="#2b6cd9"/><circle cx="16" cy="15" r="1" fill="#2b6cd9"/></svg></span>
+      <span>バスでお越しの方<span class="sub">高速バス・路線バス・無料巡回バス</span></span>
+      <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg></span>
+    </summary>
+    <div class="body">
+      <h3 class="lbl">バスの乗降場所</h3>
+      <div class="place">
+        <div class="t"><b><span class="tag">高速バス</span>バスターミナル</b><small>隣接「ハイランドリゾート ホテル＆スパ」駐車場内</small></div>
+        <a class="map" href="https://maps.app.goo.gl/nqQ9NiLLDiu8B9Hv5" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/></svg>地図</a>
+      </div>
+      <div class="place">
+        <div class="t"><b><span class="tag">路線バス</span>富士急ハイランド駅バス停</b><small>第二入園口側</small></div>
+        <a class="map" href="https://maps.app.goo.gl/acPUxMkPr6zQpdC59" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/></svg>地図</a>
+      </div>
+      <div class="place">
+        <div class="t"><b><span class="tag gray">無料巡回バス</span>FUJIYAMAタワー付近バス停</b><small>富士急グループ施設ご利用の方限定</small></div>
+        <a class="map" href="https://www.highlandstation-inn.com/loop_bus/#timetable" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>時刻表</a>
+      </div>
+
+      <h3 class="lbl">出発地から高速バスを探す</h3>
+      <p style="font-size:13px;color:var(--muted);margin:0 0 10px">お住まいの地域を選ぶと、路線・お得なバスセットプランをご覧いただけます。</p>
+      <div class="chips">
+        <a href="http://www.fujiq.jp/access/tokyo2025.html">東京都から</a>
+        <a href="http://www.fujiq.jp/access/kanagawa2025.html">神奈川県から</a>
+        <a href="http://www.fujiq.jp/access/yamanashi2025.html">山梨県から</a>
+        <a href="http://www.fujiq.jp/access/shizuoka2025.html">静岡県から</a>
+        <a href="http://www.fujiq.jp/access/chiba2025.html">千葉県から</a>
+        <a href="http://www.fujiq.jp/access/other2025.html">埼玉県から</a>
+        <a href="http://www.fujiq.jp/access/kansai2025.html">京都府・大阪府から</a>
+      </div>
+      <a class="linkbtn red" href="#">高速バスを予約する（富士急バス）
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4h6v6M20 4l-9 9M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></a>
+    </div>
+  </details>
+</section>
+
+<!-- ===== 駐車場料金 ===== -->
+<section class="section" id="parking">
+  <details class="card" open>
+    <summary>
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2b6cd9" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M9 17V7h3.5a3 3 0 0 1 0 6H9"/></svg></span>
+      <span>駐車場料金のご案内<span class="sub">90分以内無料・後払い精算</span></span>
+      <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg></span>
+    </summary>
+    <div class="body">
+      <div class="fee">
+        <div><div class="v">90分</div><div class="k">以内なら無料</div></div>
+        <div><div class="v">後払い</div><div class="k">お帰り前に事前精算</div></div>
+        <div><div class="v">2.5m〜</div><div class="k">車高で大型車料金</div></div>
+        <div><div class="v">0時〜</div><div class="k">翌日分を加算</div></div>
+      </div>
+      <h3 class="lbl">料金表</h3>
+      <p style="font-size:13px;margin:0 0 8px">ご利用日によって料金が異なります。カレンダーからご確認ください。</p>
+      <div class="mapbox" style="aspect-ratio:16/9"><span>月別 料金カレンダー（画像 or 表）</span></div>
+      <h3 class="lbl">お支払い方法（フジヤマ駐車場）</h3>
+      <div class="pay"><span>現金</span><span>クレジットカード</span><span>交通系IC</span><span>電子マネー</span><span>QRコード決済</span><span>PayPay（スマホ決済）</span></div>
+      <div class="note"><b>ご注意</b><br>・精算後10分以内にご出庫ください。<br>・イベント状況により前払いとなり、90分無料が適用されない場合があります。<br>・車中泊はできません。</div>
+      <a class="linkbtn" href="https://www.fujiq.jp/ticket/packing0320.html">駐車場料金の詳細を見る
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg></a>
+    </div>
+  </details>
+</section>
+
+<!-- ===== 注意事項 ===== -->
+<section class="section">
+  <div class="caution">
+    <h2><svg viewBox="0 0 24 24" fill="none" stroke="#e4002b" stroke-width="2"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v5M12 18h.01"/></svg>注意事項</h2>
+    <ul>
+      <li>大型連休・繁忙期は周辺道路および駐車場が大変混雑します。公共交通機関のご利用をおすすめします。</li>
+      <li>道路状況により、駐車場への入場方法を変更させていただく場合があります。</li>
+      <li>近隣の企業・商業施設への無断駐車はおやめください。</li>
+      <li>料金・運行内容は予告なく変更になる場合があります。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== 関連リンク ===== -->
+<div class="related">
+  <a href="https://membersclub.fujiq.jp/ticket/">チケットを購入する</a>
+  <a href="https://www.fujiq.jp/clubfujiq/index.html">CLUBフジQ会員になる</a>
+  <a href="https://www.fujiq.jp/special/highland_app/index.html">公式アプリをインストールする</a>
+</div>
+
+</div><!-- /container -->
+</main>
+
+<footer>© FUJIKYU HIGHLAND — モック（リニューアル案）</footer>
+
+<a class="totop" href="#" aria-label="ページトップへ"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 15l6-6 6 6"/></svg></a>
+
+<div class="bottombar">
+  <a class="map" href="https://maps.app.goo.gl/k1QEmaCw5jQvgtTi9" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="3"/></svg>地図を開く</a>
+  <a class="tk" href="https://membersclub.fujiq.jp/ticket/">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9a2 2 0 0 0 2-2V5h14v2a2 2 0 0 0 0 4v2a2 2 0 0 0 0 4v2H5v-2a2 2 0 0 0-2-2z"/></svg>チケット購入</a>
+</div>
+
+<script>
+  // 交通手段ナビ：スクロール位置に応じてアクティブ表示を切り替える
+  const links=[...document.querySelectorAll('.modenav a')];
+  const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){
+      links.forEach(l=>l.classList.toggle('is-active',l.getAttribute('href')==='#'+e.target.id));
+    }});
+  },{rootMargin:'-130px 0px -60% 0px'});
+  secs.forEach(s=>s&&io.observe(s));
+  // モバイルでは2つ目以降のカードを閉じた状態で開始（1画面に収めて選びやすく）
+  if(matchMedia('(max-width:899px)').matches){
+    document.querySelectorAll('details.card').forEach((d,i)=>{ if(i>0) d.open=false; });
+    links.forEach(a=>a.addEventListener('click',()=>{ const d=document.querySelector(a.getAttribute('href')+' details'); if(d) d.open=true; }));
+  }
+</script>
+</body>
+</html>
