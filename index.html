@@ -48,6 +48,19 @@
   .hero .en{font-size:11px;letter-spacing:.25em;color:var(--red);font-weight:700;margin-top:2px}
   .hero p{margin:12px auto 0;max-width:36em;font-size:14px;color:#444}
 
+  /* ===== key map (first view) ===== */
+  .keymap{margin:16px 0 0;position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#eaf4fb;cursor:zoom-in;display:block;border:0;padding:0;width:100%;font-family:inherit}
+  .keymap img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;display:block}
+  .keymap .zoom{position:absolute;right:10px;bottom:10px;background:rgba(27,42,74,.9);color:#fff;font-size:12px;font-weight:700;padding:6px 10px;border-radius:999px;display:flex;align-items:center;gap:4px}
+  .keymap .zoom svg{width:14px;height:14px}
+  .lightbox{position:fixed;inset:0;z-index:100;background:rgba(10,15,30,.92);display:none;flex-direction:column}
+  .lightbox.is-open{display:flex}
+  .lightbox .bar{display:flex;justify-content:space-between;align-items:center;color:#fff;padding:10px 16px;font-size:13px;flex:none}
+  .lightbox .close{background:#fff;color:var(--navy);border:0;border-radius:999px;padding:8px 14px;font-weight:800;font-size:13px;font-family:inherit;cursor:pointer}
+  .lightbox .scroller{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y pinch-zoom}
+  .lightbox .scroller img{width:max(100%,900px);max-width:none;display:block}
+  @media (min-width:900px){.lightbox .scroller img{width:min(100%,1024px);margin:0 auto}}
+
   /* ===== address card ===== */
   .addr{margin:16px 0;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
   .addr .name{font-weight:700;font-size:15px}
@@ -210,6 +223,11 @@
     </h1>
     <div class="en">ACCESS</div>
     <p>富士急ハイランドへは、お車・電車・バスなどさまざまな方法でお越しいただけます。ご来園方法をお選びください。</p>
+
+    <button class="keymap" type="button" data-lightbox aria-label="首都圏からのアクセスルートマップを拡大表示">
+      <img src="img/map.jpg" alt="首都圏からのアクセスルートマップ：電車（JR・富士急行線）、高速バス、車（中央道・東名）の主要ルート" width="1024" height="1024" fetchpriority="high">
+      <span class="zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg>タップで拡大</span>
+    </button>
 
     <div class="addr" style="text-align:left">
       <div class="name">富士急ハイランド</div>
@@ -428,6 +446,11 @@
 
 <footer>© FUJIKYU HIGHLAND — モック（リニューアル案）</footer>
 
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="アクセスルートマップ">
+  <div class="bar"><span>ピンチ・スクロールで拡大できます</span><button class="close" type="button" data-lightbox-close>閉じる ✕</button></div>
+  <div class="scroller"><img src="img/map.jpg" alt="首都圏からのアクセスルートマップ（拡大）"></div>
+</div>
+
 <a class="totop" href="#" aria-label="ページトップへ"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 15l6-6 6 6"/></svg></a>
 
 <div class="bottombar">
@@ -438,6 +461,12 @@
 </div>
 
 <script>
+  // ルートマップの拡大表示
+  const lb=document.getElementById('lightbox');
+  document.querySelectorAll('[data-lightbox]').forEach(b=>b.addEventListener('click',()=>{lb.classList.add('is-open');document.body.style.overflow='hidden';}));
+  const closeLb=()=>{lb.classList.remove('is-open');document.body.style.overflow='';};
+  document.querySelectorAll('[data-lightbox-close]').forEach(b=>b.addEventListener('click',closeLb));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
   // 交通手段ナビ：スクロール位置に応じてアクティブ表示を切り替える
   const links=[...document.querySelectorAll('.modenav a')];
   const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
