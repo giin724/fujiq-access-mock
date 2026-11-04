@@ -35,7 +35,7 @@
   .btn-menu span{display:block;width:22px;height:2px;background:var(--navy);margin:3px auto;border-radius:2px}
 
   /* hero */
-  .hero{background:linear-gradient(160deg,var(--navy) 0%,var(--navy2) 60%,#2f4a7a 100%);color:#fff;padding:28px 0 88px;position:relative;overflow:hidden}
+  .hero{background:linear-gradient(160deg,var(--navy) 0%,var(--navy2) 60%,#2f4a7a 100%);color:#fff;padding:20px 0 96px;position:relative;overflow:hidden}
   .hero::after{content:"";position:absolute;left:50%;bottom:-40px;transform:translateX(-50%);width:140%;height:120px;background:var(--bg);border-radius:50% 50% 0 0}
   .hero .fuji{position:absolute;right:-30px;top:10px;width:220px;height:120px;opacity:.18}
   .hero .en{font-size:11px;letter-spacing:.3em;color:var(--accent);font-weight:700}
@@ -44,8 +44,20 @@
   .hero .addr{margin-top:14px;display:flex;align-items:center;gap:8px;font-size:12px;color:#c7d2ea}
   .hero .addr a{color:#fff;font-weight:700;text-decoration:underline;white-space:nowrap}
 
+  /* key map (first view) */
+  .keymap{position:relative;z-index:2;margin:-64px 0 0;border-radius:var(--r);overflow:hidden;box-shadow:0 8px 24px rgba(20,33,61,.18);background:#eaf4fb;cursor:zoom-in;display:block;border:0;padding:0;width:100%;font-family:inherit}
+  .keymap img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;display:block}
+  .keymap .zoom{position:absolute;right:10px;bottom:10px;background:rgba(20,33,61,.9);color:#fff;font-size:12px;font-weight:700;padding:6px 10px;border-radius:999px;display:flex;align-items:center;gap:4px}
+  .keymap .zoom svg{width:14px;height:14px}
+  .lightbox{position:fixed;inset:0;z-index:100;background:rgba(10,15,30,.92);display:none;flex-direction:column}
+  .lightbox.is-open{display:flex}
+  .lightbox .lbbar{display:flex;justify-content:space-between;align-items:center;color:#fff;padding:10px 16px;font-size:13px;flex:none}
+  .lightbox .close{background:#fff;color:var(--navy);border:0;border-radius:999px;padding:8px 14px;font-weight:800;font-size:13px;font-family:inherit;cursor:pointer}
+  .lightbox .scroller{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y pinch-zoom}
+  .lightbox .scroller img{width:max(100%,900px);max-width:none;display:block}
+
   /* mode tiles (tabs) */
-  .tiles{position:relative;z-index:2;margin-top:-72px}
+  .tiles{position:relative;z-index:2;margin-top:14px}
   .tiles ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
   .tile{display:flex;flex-direction:column;align-items:center;gap:4px;background:#fff;border-radius:var(--r);padding:14px 8px 12px;box-shadow:var(--shadow);border:2px solid transparent;cursor:pointer;text-align:center;font-family:inherit;width:100%}
   .tile svg{width:34px;height:34px}
@@ -154,10 +166,13 @@
   .bar svg{width:18px;height:18px}
 
   @media (min-width:900px){
-    .hero{padding:48px 0 110px}
+    .hero{padding:40px 0 120px}
     .hero h1{font-size:40px}
     .hero p{font-size:16px}
     .hero .fuji{width:420px;height:230px;right:40px;top:0;opacity:.22}
+    .keymap{max-width:640px;margin:-88px auto 0}
+    .lightbox .scroller img{width:min(100%,1024px);margin:0 auto}
+    .tiles{margin-top:20px}
     .tiles ul{max-width:760px;margin:0 auto}
     .tile{flex-direction:row;justify-content:center;gap:12px;padding:18px;text-align:left}
     .tile .n{font-size:16px}
@@ -190,7 +205,7 @@
   <div class="wrap">
     <div class="en">ACCESS</div>
     <h1>交通アクセス</h1>
-    <p>富士急ハイランドは中央自動車道 河口湖ICからすぐ、富士急行線「富士急ハイランド駅」直結。来園方法を選んでください。</p>
+    <p>首都圏から電車・バス・車でらくらくアクセス。来園方法を選んでください。</p>
     <div class="addr">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffc83d" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="3"/></svg>
       <span>〒403-0017 山梨県富士吉田市新西原5-6-1</span>
@@ -200,6 +215,12 @@
 </section>
 
 <div class="wrap">
+  <!-- 首都圏ルートマップ（ファーストビュー） -->
+  <button class="keymap" type="button" data-lightbox aria-label="首都圏からのアクセスルートマップを拡大表示">
+    <img src="img/map.jpg" alt="首都圏からのアクセスルートマップ：電車（JR・富士急行線）、高速バス、車（中央道・東名）の主要ルート" width="1024" height="1024" fetchpriority="high">
+    <span class="zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg>タップで拡大</span>
+  </button>
+
   <!-- 手段タイル（タブ） -->
   <nav class="tiles" aria-label="来園方法を選ぶ">
     <ul role="tablist">
@@ -362,6 +383,11 @@
 
 <footer>© FUJIKYU HIGHLAND — モック（リニューアルB案）</footer>
 
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="アクセスルートマップ">
+  <div class="lbbar"><span>ピンチ・スクロールで拡大できます</span><button class="close" type="button" data-lightbox-close>閉じる ✕</button></div>
+  <div class="scroller"><img src="img/map.jpg" alt="首都圏からのアクセスルートマップ（拡大）"></div>
+</div>
+
 <div class="bar">
   <a class="r" href="https://www.google.com/maps/dir/?api=1&destination=富士急ハイランド" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>ルート検索</a>
@@ -369,6 +395,13 @@
 </div>
 
 <script>
+  // ルートマップの拡大表示
+  const lb=document.getElementById('lightbox');
+  document.querySelectorAll('[data-lightbox]').forEach(b=>b.addEventListener('click',()=>{lb.classList.add('is-open');document.body.style.overflow='hidden';}));
+  const closeLb=()=>{lb.classList.remove('is-open');document.body.style.overflow='';};
+  document.querySelectorAll('[data-lightbox-close]').forEach(b=>b.addEventListener('click',closeLb));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
+
   const tabs=[...document.querySelectorAll('[data-tab]')];
   const panels={train:'p-train',car:'p-car',bus:'p-bus',parking:'p-parking'};
   function show(key,scroll){
