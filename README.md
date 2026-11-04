@@ -1,2 +1,11 @@
-# fujiq-access-mock
-Fujikyu Highland access page renewal mock (Plan A / Plan B)
+# 富士急ハイランド 交通アクセスページ リニューアルモック
+
+モバイル閲覧（80%超）を優先したUI案。参考: ひらかたパーク アクセスページ。
+
+| 案 | 構成 | URL |
+|---|---|---|
+| A案 | 手段別アコーディオン積み上げ型 | https://giin724.github.io/fujiq-access-mock/ |
+| B案 | ヒーロー＋3タイルのタブ切替型 | https://giin724.github.io/fujiq-access-mock/index-b.html |
+
+- 所要時間・地図埋め込み・料金カレンダー・高速バス予約リンクは仮置き
+- ロゴ・配色は仮（正式ブランド素材への差し替えが必要）
