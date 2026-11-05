@@ -191,6 +191,13 @@
     footer{padding-bottom:24px}
     .related{grid-template-columns:repeat(3,1fr)}
   }
+
+  /* 外部リンク注記 */
+  .extnote{display:block;font-size:11px;line-height:1.5;color:var(--muted);font-weight:400;margin-top:4px;text-align:center}
+  .place-group+.extnote,.pl-group+.extnote{text-align:right}
+  .lbl2{display:block;text-align:center;line-height:1.25}
+  .lbl2 .extnote{font-size:9px;margin-top:1px;color:inherit;opacity:.8}
+  .plan .extnote{text-align:left}
 </style>
 </head>
 <body>
@@ -242,6 +249,7 @@
           営業時間を見る
         </a>
       </div>
+      <small class="extnote">※外部サイトへリンクします</small>
     </div>
   </div>
 </section>
@@ -289,7 +297,7 @@
         </div>
         <div>
           <h3 class="lbl">駐車場のご案内</h3>
-          <div class="place">
+          <div class="place-group"><div class="place">
             <div class="t"><b>フジヤマ駐車場（第一・第三）</b><small>普通車・大型車・二輪車</small></div>
             <a class="map" href="https://maps.app.goo.gl/2kETEwMKgXVMJ8Nm9" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/></svg>地図</a>
           </div>
@@ -301,6 +309,7 @@
             <div class="t"><b><span class="tag gray">バイク</span>駐輪場</b><small>フジヤマ駐車場（第一）内</small></div>
             <a class="map" href="https://maps.app.goo.gl/R9jj3ikvfYVL3HwKA" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/></svg>地図</a>
           </div>
+          </div><small class="extnote">※外部サイトへリンクします</small>
           <div class="note"><b>送迎（乗り降りのみ）の方へ</b><br>入園されない送迎の方は専用の乗降場所をご利用ください。<a href="https://www.fujiq.jp/news/pickup_car_2023.html">送迎案内はこちら ›</a></div>
           <a class="linkbtn" href="#parking">駐車場料金を見る
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg></a>
@@ -309,9 +318,9 @@
 
       <h3 class="lbl">お得な車セットプラン</h3>
       <div class="plans">
-        <a class="plan" href="https://www.fujiq.jp/event/highwayplan.html"><span class="pct">SET<br>PLAN</span><span class="t"><b>NEXCO高速道路＆ワンデイパス</b><small>高速道路の周遊パスとワンデイパスがセットに</small></span><span class="ext">外部 ↗</span></a>
-        <a class="plan" href="https://car.orix.co.jp/campaign/fuji_qLP.html"><span class="pct">SET<br>PLAN</span><span class="t"><b>オリックスレンタカー＆ワンデイパス</b><small>レンタカーで行くならこちら</small></span><span class="ext">外部 ↗</span></a>
-        <a class="plan" href="https://share.timescar.jp/ecoupon/fujiq/"><span class="pct">SET<br>PLAN</span><span class="t"><b>タイムズカーシェア＆ワンデイパス</b><small>カーシェア利用者限定クーポン</small></span><span class="ext">外部 ↗</span></a>
+        <a class="plan" href="https://www.fujiq.jp/event/highwayplan.html"><span class="pct">SET<br>PLAN</span><span class="t"><b>NEXCO高速道路＆ワンデイパス</b><small>高速道路の周遊パスとワンデイパスがセットに</small></span></a>
+        <a class="plan" href="https://car.orix.co.jp/campaign/fuji_qLP.html"><span class="pct">SET<br>PLAN</span><span class="t"><b>オリックスレンタカー＆ワンデイパス</b><small>レンタカーで行くならこちら</small><small class="extnote">※外部サイトへリンクします</small></span></a>
+        <a class="plan" href="https://share.timescar.jp/ecoupon/fujiq/"><span class="pct">SET<br>PLAN</span><span class="t"><b>タイムズカーシェア＆ワンデイパス</b><small>カーシェア利用者限定クーポン</small><small class="extnote">※外部サイトへリンクします</small></span></a>
       </div>
     </div>
   </details>
@@ -342,13 +351,14 @@
           <div class="mapbox"><span>Googleマップ埋め込み（富士急ハイランド駅 → 第二入園口）</span></div>
           <a class="linkbtn" href="https://www.fujikyu-railway.jp/denshadefujiq/" target="_blank" rel="noopener">電車でのアクセスガイド（外部サイト）
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4h6v6M20 4l-9 9M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></a>
+<small class="extnote">※外部サイトへリンクします</small>
         </div>
       </div>
 
       <h3 class="lbl">お得な電車セットプラン</h3>
       <div class="plans">
-        <a class="plan" href="https://www.fujikyu-railway.jp/ticket/fujiq.php"><span class="pct">大月<br>発</span><span class="t"><b>富士急行線2日間往復＆ワンデイパス</b><small>沿線をゆっくり観光したい方におすすめ</small></span><span class="ext">外部 ↗</span></a>
-        <a class="plan" href="https://www.jre-travel.com/feature/fujiq/"><span class="pct">新宿<br>発</span><span class="t"><b>JR特急列車往復＆ワンデイパス</b><small>より早く快適に移動したい方におすすめ</small></span><span class="ext">外部 ↗</span></a>
+        <a class="plan" href="https://www.fujikyu-railway.jp/ticket/fujiq.php"><span class="pct">大月<br>発</span><span class="t"><b>富士急行線2日間往復＆ワンデイパス</b><small>沿線をゆっくり観光したい方におすすめ</small><small class="extnote">※外部サイトへリンクします</small></span></a>
+        <a class="plan" href="https://www.jre-travel.com/feature/fujiq/"><span class="pct">新宿<br>発</span><span class="t"><b>JR特急列車往復＆ワンデイパス</b><small>より早く快適に移動したい方におすすめ</small><small class="extnote">※外部サイトへリンクします</small></span></a>
       </div>
     </div>
   </details>
@@ -364,7 +374,7 @@
     </summary>
     <div class="body">
       <h3 class="lbl">バスの乗降場所</h3>
-      <div class="place">
+      <div class="place-group"><div class="place">
         <div class="t"><b><span class="tag">高速バス</span>バスターミナル</b><small>隣接「ハイランドリゾート ホテル＆スパ」駐車場内</small></div>
         <a class="map" href="https://maps.app.goo.gl/nqQ9NiLLDiu8B9Hv5" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/></svg>地図</a>
       </div>
@@ -377,7 +387,8 @@
         <a class="map" href="https://www.highlandstation-inn.com/loop_bus/#timetable" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>時刻表</a>
       </div>
 
-      <h3 class="lbl">出発地から高速バスを探す</h3>
+      </div><small class="extnote">※外部サイトへリンクします</small>
+          <h3 class="lbl">出発地から高速バスを探す</h3>
       <p style="font-size:13px;color:var(--muted);margin:0 0 10px">お住まいの地域を選ぶと、路線・お得なバスセットプランをご覧いただけます。</p>
       <div class="chips">
         <a href="bus/tokyo.html">東京都から</a>
@@ -390,6 +401,7 @@
       </div>
       <a class="linkbtn red" href="#">高速バスを予約する（富士急バス）
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4h6v6M20 4l-9 9M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></a>
+<small class="extnote">※外部サイトへリンクします</small>
     </div>
   </details>
 </section>
@@ -455,7 +467,7 @@
 
 <div class="bottombar">
   <a class="map" href="https://maps.app.goo.gl/k1QEmaCw5jQvgtTi9" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="3"/></svg>地図を開く</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="3"/></svg><span class="lbl2">地図を開く<small class="extnote">※外部サイトへリンクします</small></span></a>
   <a class="tk" href="https://membersclub.fujiq.jp/ticket/">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9a2 2 0 0 0 2-2V5h14v2a2 2 0 0 0 0 4v2a2 2 0 0 0 0 4v2H5v-2a2 2 0 0 0-2-2z"/></svg>チケット購入</a>
 </div>
