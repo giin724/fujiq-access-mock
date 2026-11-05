@@ -46,7 +46,8 @@
 
   /* key map (first view) */
   .keymap{position:relative;z-index:2;margin:-64px 0 0;border-radius:var(--r);overflow:hidden;box-shadow:0 8px 24px rgba(20,33,61,.18);background:#eaf4fb;cursor:zoom-in;display:block;border:0;padding:0;width:100%;font-family:inherit}
-  .keymap img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;display:block}
+  .keymap{cursor:default}
+  .keymap svg{display:block;width:100%;height:auto}
   .keymap .zoom{position:absolute;right:10px;bottom:10px;background:rgba(20,33,61,.9);color:#fff;font-size:12px;font-weight:700;padding:6px 10px;border-radius:999px;display:flex;align-items:center;gap:4px}
   .keymap .zoom svg{width:14px;height:14px}
   .lightbox{position:fixed;inset:0;z-index:100;background:rgba(10,15,30,.92);display:none;flex-direction:column}
@@ -216,10 +217,63 @@
 
 <div class="wrap">
   <!-- 首都圏ルートマップ（ファーストビュー） -->
-  <button class="keymap" type="button" data-lightbox aria-label="首都圏からのアクセスルートマップを拡大表示">
-    <img src="img/map.jpg" alt="首都圏からのアクセスルートマップ：電車（JR・富士急行線）、高速バス、車（中央道・東名）の主要ルート" width="1024" height="1024" fetchpriority="high">
-    <span class="zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg>タップで拡大</span>
-  </button>
+  <div class="keymap">
+    <svg viewBox="0 0 420 350" role="img" aria-label="車ご利用での所要時間：東京から約90分、静岡御殿場から約30分、埼玉から約120分" font-family="'Hiragino Kaku Gothic ProN','Hiragino Sans','Noto Sans JP','Yu Gothic',Meiryo,sans-serif">
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#e4002b"/></marker>
+      </defs>
+      <!-- 背景：Midjourney生成の地図（関東周辺を切り出し） -->
+      <image href="img/map-bg.jpg" x="0" y="0" width="420" height="350" preserveAspectRatio="xMidYMid slice"/>
+
+      <!-- 見出しラベル -->
+      <rect x="0" y="0" width="206" height="42" fill="#1f5fd0"/>
+      <g transform="translate(12 9)" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11"/><rect x="3" y="11" width="18" height="7" rx="2"/><circle cx="7.5" cy="18" r="1.6" fill="#1f5fd0"/><circle cx="16.5" cy="18" r="1.6" fill="#1f5fd0"/>
+      </g>
+      <text x="44" y="26.5" font-size="14" font-weight="800" fill="#fff">車ご利用での所要時間</text>
+
+      <!-- ルート矢印 -->
+      <g fill="none" stroke="#e4002b" stroke-width="2" stroke-linecap="round" marker-end="url(#ah)">
+        <path d="M238 155 Q192 118 144 148"/>
+        <path d="M220 90 Q160 88 138 138"/>
+        <path d="M148 192 Q166 180 140 164"/>
+      </g>
+
+      <!-- 出発地の点とラベル -->
+      <g fill="#e4002b">
+        <circle cx="238" cy="155" r="5"/><circle cx="220" cy="90" r="5"/><circle cx="148" cy="192" r="5"/>
+      </g>
+      <g font-size="13" font-weight="800" fill="#e4002b" stroke="#fff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">
+        <text x="247" y="160">東京</text>
+        <text x="229" y="86">埼玉</text>
+        <text x="158" y="208">御殿場</text>
+      </g>
+
+      <!-- 富士急ハイランド ピンとバッジ -->
+      <path d="M130 160c-9-12-15-20-15-28a15 15 0 0 1 30 0c0 8-6 16-15 28z" fill="#e4002b" stroke="#fff" stroke-width="2"/>
+      <circle cx="130" cy="131" r="5.5" fill="#fff"/>
+      <g>
+        <path d="M100 96l14 0l-4 14z" fill="#e4002b"/>
+        <rect x="8" y="62" width="132" height="36" rx="8" fill="#e4002b"/>
+        <text x="74" y="85.5" text-anchor="middle" font-size="14" font-weight="900" fill="#fff">富士急ハイランド</text>
+      </g>
+
+      <!-- 所要時間の円 -->
+      <g text-anchor="middle" fill="#fff" font-weight="900">
+        <circle cx="344" cy="212" r="50" fill="#1f5fd0"/>
+        <text x="344" y="198" font-size="17">東京<tspan font-size="10" dy="-1"> から</tspan></text>
+        <text x="344" y="234"><tspan font-size="11">約</tspan><tspan font-size="32">90</tspan><tspan font-size="11">分</tspan></text>
+
+        <circle cx="344" cy="76" r="50" fill="#1f5fd0"/>
+        <text x="344" y="62" font-size="17">埼玉<tspan font-size="10" dy="-1"> から</tspan></text>
+        <text x="344" y="98"><tspan font-size="11">約</tspan><tspan font-size="32">120</tspan><tspan font-size="11">分</tspan></text>
+
+        <circle cx="74" cy="282" r="50" fill="#1f5fd0"/>
+        <text x="74" y="266" font-size="13">静岡御殿場<tspan font-size="9" dy="-1"> から</tspan></text>
+        <text x="74" y="304"><tspan font-size="11">約</tspan><tspan font-size="32">30</tspan><tspan font-size="11">分</tspan></text>
+      </g>
+    </svg>
+  </div>
 
   <!-- 手段タイル（タブ） -->
   <nav class="tiles" aria-label="来園方法を選ぶ">
@@ -383,11 +437,6 @@
 
 <footer>© FUJIKYU HIGHLAND — モック（リニューアルB案）</footer>
 
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="アクセスルートマップ">
-  <div class="lbbar"><span>ピンチ・スクロールで拡大できます</span><button class="close" type="button" data-lightbox-close>閉じる ✕</button></div>
-  <div class="scroller"><img src="img/map.jpg" alt="首都圏からのアクセスルートマップ（拡大）"></div>
-</div>
-
 <div class="bar">
   <a class="r" href="https://www.google.com/maps/dir/?api=1&destination=富士急ハイランド" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>ルート検索</a>
@@ -395,13 +444,6 @@
 </div>
 
 <script>
-  // ルートマップの拡大表示
-  const lb=document.getElementById('lightbox');
-  document.querySelectorAll('[data-lightbox]').forEach(b=>b.addEventListener('click',()=>{lb.classList.add('is-open');document.body.style.overflow='hidden';}));
-  const closeLb=()=>{lb.classList.remove('is-open');document.body.style.overflow='';};
-  document.querySelectorAll('[data-lightbox-close]').forEach(b=>b.addEventListener('click',closeLb));
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
-
   const tabs=[...document.querySelectorAll('[data-tab]')];
   const panels={train:'p-train',car:'p-car',bus:'p-bus',parking:'p-parking'};
   function show(key,scroll){
