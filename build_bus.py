@@ -15,11 +15,12 @@ PREFS = [
   dict(slug="tokyo", name="東京都", short="東京", src="https://www.fujiq.jp/access/tokyo2025.html",
     lead="バスタ新宿・東京駅・渋谷・池袋など都内各地から直行。往復バスとワンデイパスのセットがおトクです。",
     facts=[("8", "路線", "都内各地から直行"), ("乗換なし", "", "園前バスターミナル着"), ("優先入園", "", "ワンデイパス付き")],
+    tabs=["special","set","hotel"],
     sections=[
       dict(kind="special", title="超・得Qパック", badge="限定",
            desc="往復高速バス＋優先入園ワンデイパス＋絶叫優先券1枚のセット。",
            routes=[dict(stops=["新宿駅"], info="http://www.fujiq.jp/event/tokuQpack_2025.html", buy=None, infoLabel="プラン詳細")]),
-      dict(kind="set", title="往復高速バス＆ワンデイパスセット", badge="得Qパック",
+      dict(kind="set", title="得Qパック", badge="往復高速バス＆ワンデイパス",
            desc="往復の高速バスとワンデイパスがセットになったおトクなきっぷ。",
            routes=[
              dict(stops=["バスタ新宿","中央道三鷹","中央道深大寺","中央道府中","中央道日野","中央道八王子"], info="https://bus.fujikyu.co.jp/highway/detail/id/1"),
@@ -30,13 +31,12 @@ PREFS = [
              dict(stops=["サンシャインプリンスホテル","池袋駅"], info="https://bus.fujikyu.co.jp/highway/detail/id/8"),
              dict(stops=["お台場"], info="https://bus.fujikyu.co.jp/highway/detail/id/46"),
              dict(stops=["羽田空港"], info="https://bus.fujikyu.co.jp/highway/detail/id/4"),
+             dict(stops=["品川駅"], info="https://bus.fujikyu.co.jp/highway/detail/id/4", buy=None,
+                  tag="高速バスのみ", note="ワンデイパスとのセット券はありません。"),
            ]),
-      dict(kind="tour", title="バスツアー（富士急トラベル）", badge="ツアー",
+      dict(kind="tour", title="FUJI-Qライナー（バスツアー）", badge="ツアー",
            desc="新宿・上野・八王子発。乗り換えの不安がなく、優先入園付きワンデイパスやトーマスランドパスも選べます。",
            routes=[dict(stops=["新宿","上野","八王子"], info=TOUR, infoLabel="ツアー詳細", buy=None)]),
-      dict(kind="only", title="高速バスのみ", badge="セット券なし",
-           desc="ワンデイパスとのセット券はありません。バス単体でのご利用になります。",
-           routes=[dict(stops=["品川駅"], info="https://bus.fujikyu.co.jp/highway/detail/id/4")]),
       dict(kind="hotel", title="宿泊セット", badge="泊まる",
            desc="高速バス＋ワンデイパス付きのオフィシャルホテル宿泊プラン。",
            routes=[dict(stops=["オフィシャルホテル宿泊プラン"], info=HOTEL, infoLabel="宿泊プランを見る", buy=None)]),
@@ -44,8 +44,9 @@ PREFS = [
   dict(slug="kanagawa", name="神奈川県", short="神奈川", src="https://www.fujiq.jp/access/kanagawa2025.html",
     lead="横浜・藤沢・本厚木・橋本など県内各地から直行。往復バスとワンデイパスのセットがおトクです。",
     facts=[("4", "路線", "県内各地から直行"), ("乗換なし", "", "園前バスターミナル着"), ("優先入園", "", "ワンデイパス付き")],
+    tabs=["set","hotel"],
     sections=[
-      dict(kind="set", title="往復高速バス＆ワンデイパスセット", badge="得Qパック",
+      dict(kind="set", title="得Qパック", badge="往復高速バス＆ワンデイパス",
            desc="往復の高速バスとワンデイパスがセットになったおトクなきっぷ。",
            routes=[
              dict(stops=["横浜駅"], info="https://bus.fujikyu.co.jp/highway/detail/id/6"),
@@ -53,7 +54,7 @@ PREFS = [
              dict(stops=["藤沢駅","辻堂駅","本厚木駅"], info="https://bus.fujikyu.co.jp/highway/detail/id/35"),
              dict(stops=["橋本駅"], info="https://bus.fujikyu.co.jp/highway/detail/id/34"),
            ]),
-      dict(kind="tour", title="バスツアー（富士急トラベル）", badge="ツアー",
+      dict(kind="tour", title="FUJI-Qライナー（バスツアー）", badge="ツアー",
            desc="新横浜発。富士急へ最短で行けて、乗り換えが不安な方でも安心。優先入園付きワンデイパス付き。",
            routes=[dict(stops=["新横浜駅"], info=TOUR, infoLabel="ツアー詳細", buy=None)]),
       dict(kind="hotel", title="宿泊セット", badge="泊まる",
@@ -63,33 +64,33 @@ PREFS = [
   dict(slug="yamanashi", name="山梨県", short="山梨", src="https://www.fujiq.jp/access/yamanashi2025.html",
     lead="甲府駅から路線バスで。往復路線バスとワンデイパスのセットがおトクです。",
     facts=[("路線バス", "", "甲府駅から"), ("往復", "", "バス＋ワンデイパス"), ("予約不要", "", "路線バスで気軽に")],
+    tabs=["set"],
     sections=[
-      dict(kind="local", title="往復路線バス＆ワンデイパスセット", badge="路線バス",
-           desc="往復の路線バスとワンデイパスがセットになったきっぷ。",
-           routes=[dict(stops=["甲府駅"], info="https://www.fujikyubus.co.jp/regular/#section-6")]),
+      dict(kind="set", title="得Qパック", badge="往復路線バス＆ワンデイパス",
+           desc="往復の路線バスとワンデイパスがセットになったおトクなきっぷ。",
+           routes=[dict(stops=["甲府駅"], info="https://www.fujikyubus.co.jp/regular/#section-6", tag="路線バス")]),
     ]),
   dict(slug="shizuoka", name="静岡県", short="静岡", src="https://www.fujiq.jp/access/shizuoka2025.html",
     lead="三島・静岡からの高速バス、御殿場・新富士・富士宮からの路線バス。ワンデイパスとのセットもあります。",
     facts=[("高速・路線", "", "2種類のバス"), ("乗換なし", "", "園前バスターミナル着"), ("優先入園", "", "ワンデイパス付き")],
+    tabs=["set","hotel"],
     sections=[
-      dict(kind="set", title="往復高速バス＆ワンデイパスセット", badge="得Qパック",
-           desc="往復の高速バスとワンデイパスがセットになったおトクなきっぷ。",
+      dict(kind="set", title="得Qパック", badge="往復バス＆ワンデイパス",
+           desc="往復の高速バスまたは路線バスとワンデイパスがセットになったおトクなきっぷ。",
            routes=[
-             dict(stops=["三島駅"], info="https://bus.fujikyu.co.jp/highway/detail/id/29"),
-             dict(stops=["静岡駅"], info="https://bus.fujikyu.co.jp/highway/detail/id/12"),
+             dict(stops=["三島駅"], info="https://bus.fujikyu.co.jp/highway/detail/id/29", tag="高速バス"),
+             dict(stops=["静岡駅"], info="https://bus.fujikyu.co.jp/highway/detail/id/12", tag="高速バス"),
+             dict(stops=["御殿場駅"], info="https://www.fujikyubus.co.jp/regular/", tag="路線バス"),
+             dict(stops=["新富士駅","富士宮駅"], info="https://www.fujikyubus.co.jp/regular/", tag="路線バス"),
+             dict(stops=["御殿場駅","御殿場プレミアム・アウトレット"], info="https://bus.fujikyu.co.jp/highway/detail/id/41", buy=None,
+                  tag="高速バスのみ", note="ワンデイパスとのセット券はありません。"),
            ]),
-      dict(kind="tour", title="バスツアー（富士急トラベル）", badge="ツアー",
+      dict(kind="tour", title="FUJI-Qライナー（バスツアー）", badge="ツアー",
            desc="静岡発。富士急へ最短で行けて、乗り換えの心配なし。優先入園付きワンデイパス付き。",
            routes=[dict(stops=["静岡"], info=TOUR, infoLabel="ツアー詳細", buy=None)]),
-      dict(kind="only", title="高速バスのみ", badge="セット券なし",
-           desc="ワンデイパスとのセット券はありません。バス単体でのご利用になります。",
-           routes=[dict(stops=["御殿場駅","御殿場プレミアム・アウトレット"], info="https://bus.fujikyu.co.jp/highway/detail/id/41")]),
-      dict(kind="local", title="往復路線バス＆ワンデイパスセット", badge="路線バス",
-           desc="往復の路線バスとワンデイパスがセットになったきっぷ。",
-           routes=[
-             dict(stops=["御殿場駅"], info="https://www.fujikyubus.co.jp/regular/"),
-             dict(stops=["新富士駅","富士宮駅"], info="https://www.fujikyubus.co.jp/regular/"),
-           ]),
+      dict(kind="hotel", title="宿泊セット", badge="泊まる",
+           desc="高速バス＋ワンデイパス付きのオフィシャルホテル宿泊プラン。",
+           routes=[dict(stops=["オフィシャルホテル宿泊プラン"], info=HOTEL, infoLabel="宿泊プランを見る", buy=None)]),
     ]),
   dict(slug="chiba", name="千葉県", short="千葉", src="https://www.fujiq.jp/access/chiba2025.html",
     lead="海浜幕張・津田沼・西船橋から直行。成田空港からの高速バスもあります。",
@@ -149,13 +150,18 @@ def route_card(r, kind):
     chips = "".join(f'<span class="stop">{e(s)}</span>' for s in stops) if len(stops) > 1 else ""
     first = e(stops[0]) + ("　ほか" if len(stops) > 1 else "")
     buy_html = f'<a class="b buy" href="{e(buy)}" target="_blank" rel="noopener">購入する</a>' if buy else ""
+    tag = r.get("tag")
+    tag_cls = " tag-only" if tag == "高速バスのみ" else ""
+    tag_html = f'<span class="rtag{tag_cls}">{e(tag)}</span>' if tag else ""
+    note_html = f'<p class="rnote">{e(r["note"])}</p>' if r.get("note") else ""
     return f'''
       <article class="route">
         <div class="route-head">
-          <div class="from"><span class="lbl">出発地</span><b>{first}</b></div>
+          <div class="from"><span class="lbl">出発地{tag_html}</span><b>{first}</b></div>
           <span class="to">→ 富士急ハイランド</span>
         </div>
         {f'<div class="stops">{chips}</div>' if chips else ''}
+        {note_html}
         <div class="route-actions">
           <a class="b info" href="{e(r["info"])}" target="_blank" rel="noopener">{e(info_label)}</a>
           {buy_html}
@@ -183,7 +189,8 @@ def pref_switch(current):
 
 def jump_tabs(p):
     labels = {"special":"超・得Q","set":"往復セット","tour":"ツアー","only":"バスのみ","local":"路線バス","hotel":"宿泊"}
-    return "".join(f'<a href="#s-{s["kind"]}">{labels.get(s["kind"], s["title"])}</a>' for s in p["sections"])
+    kinds = p.get("tabs") or [s["kind"] for s in p["sections"]]
+    return "".join(f'<a href="#s-{k}">{labels.get(k, k)}</a>' for k in kinds)
 
 def facts(p):
     out = []
