@@ -3,6 +3,7 @@
 python build_bus.py  で fujiq-access-mock/bus/ 配下に7ページを書き出す。
 """
 import html, os, json
+from urllib.parse import urlparse
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, "bus")
@@ -146,6 +147,15 @@ KIND_ICON = {
 
 def e(s): return html.escape(s, quote=True)
 
+EXTNOTE = '<small class="extnote">※外部サイトへリンクします</small>'
+
+def is_ext(href):
+    """fujiq.jp ドメイン（会員サイト含む）以外への絶対URLを外部リンクとみなす"""
+    if not href.startswith("http"):
+        return False
+    host = urlparse(href).hostname or ""
+    return not (host == "fujiq.jp" or host.endswith(".fujiq.jp"))
+
 # ---------------------------------------------------------------- template parts
 def route_card(r, kind):
     stops = r["stops"]
@@ -158,6 +168,7 @@ def route_card(r, kind):
     tag_cls = " tag-only" if tag == "高速バスのみ" else ""
     tag_html = f'<span class="rtag{tag_cls}">{e(tag)}</span>' if tag else ""
     note_html = f'<p class="rnote">{e(r["note"])}</p>' if r.get("note") else ""
+    ext_html = EXTNOTE if (is_ext(r["info"]) or (buy and is_ext(buy))) else ""
     return f'''
       <article class="route">
         <div class="route-head">
@@ -170,6 +181,7 @@ def route_card(r, kind):
           <a class="b info" href="{e(r["info"])}" target="_blank" rel="noopener">{e(info_label)}</a>
           {buy_html}
         </div>
+        {ext_html}
       </article>'''
 
 def section(sec):
@@ -248,7 +260,7 @@ def page(p):
     <ul>
       <li>所要時間・運賃・時刻は各路線の「路線・料金表」でご確認ください。道路状況により遅れる場合があります。</li>
       <li>セット券のワンデイパスには開園前に入園できる優先入園が付きます（一部対象外あり）。</li>
-      <li>高速バスは「ハイランドリゾート ホテル＆スパ」駐車場内のバスターミナルに到着します。<a href="https://maps.app.goo.gl/nqQ9NiLLDiu8B9Hv5" target="_blank" rel="noopener">地図を見る ›</a></li>
+      <li>高速バスは「ハイランドリゾート ホテル＆スパ」駐車場内のバスターミナルに到着します。<a href="https://maps.app.goo.gl/nqQ9NiLLDiu8B9Hv5" target="_blank" rel="noopener">地図を見る ›</a> <small class="extnote inline">※外部サイトへリンクします</small></li>
       <li>料金・運行内容は予告なく変更になる場合があります。</li>
     </ul>
   </section>
